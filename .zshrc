@@ -94,6 +94,7 @@ export PATH="$PATH:/opt/homebrew/opt/openjdk/bin"
 export PATH="$PATH:~/.cargo/bin"
 export PATH="$PATH:~/scripts"
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
+export FZF_DEFAULT_COMMAND='find .'
 
 # INITS #################################
 
@@ -111,20 +112,25 @@ fi
 
 # Wrapper for NewsAPI - https://newsapi.org/ 
 getnews () {
+  cacheFile=/tmp/news_cache
   now=$($DATE_BIN +%s)
-  cached=$($DATE_BIN +%s -r /tmp/.news-cache)
-  duration=$(expr $(expr $now - $cached) / 60)
-  echo "News have been fetched $duration minutes ago."
-  if [ $duration -ge 5 ]; then
+  cached=$($DATE_BIN +%s -r "$cacheFile" 2>/dev/null)
+  cacheMaxAge=15
+  age=$cacheMaxAge
+  if [ -f "$cacheFile" ]; then
+    age=$(expr $(expr $now - $cached) / 60)
+    echo "News have been fetched $age minutes ago."
+  fi
+  if [ $age -ge $cacheMaxAge ]; then
     echo "Fetching freshest news."
     curl https://newsapi.org/v2/top-headlines -s -G \
       -d sources=$1 \
       -d apiKey="$3" \
       -d pageSize="$2" \
-      -o /tmp/.news-cache
+      -o "$cacheFile"
   fi
   
-  news=$(jq -rC '.articles[] | .title, "> "+.url, ""' /tmp/.news-cache)
+  news=$(jq -rC '.articles[] | .title, "> "+.url, ""' "$cacheFile")
   longestLink=$(echo "$news" | grep http | $WC_BIN -L)
   if [ $(command -v cowsay) ]; then 
     echo "$news" | cowsay -pW$longestLink
