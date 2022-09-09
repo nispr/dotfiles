@@ -1,13 +1,34 @@
 #!/usr/bin/env bash
 
+# Brew installation
+
 if [ ! $(command -v brew) ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-ios="carthage cocoapods"
-general="broot coreutils ddate fzf gawk gh htop jenv neovim node ripgrep ruby tmux zsh-syntax-highlighting"
+ios=""\
+	"carthage"\
+  	"cocoapods"\
+
+general="broot"\
+	"coreutils"\
+	"ddate"\
+	"fzf"\
+	"gawk"\
+	"gh"\
+	"htop"\
+	"jenv"\
+	"neovim"\
+	"node"\
+	"ripgrep"\
+	"ruby"\
+	"tmux"\
+	"zsh-syntax-highlighting"\
+
 networking="httpie"
+
 creative="hugo"
-utility="googler lastpass-cli thefuck"
+
+utility="googler" "lastpass-cli" "thefuck"
 
 brew install $ios $general $networking $creative $utility
