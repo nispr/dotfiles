@@ -1,16 +1,21 @@
 return require('packer').startup(function()
 	use 'wbthomason/packer.nvim'
 	use 'morhetz/gruvbox'
-	use 'preservim/nerdtree'
+	
+    -- File explorer pane
+    use 'preservim/nerdtree'
 	use 'Xuyuanp/nerdtree-git-plugin'
-	use 'rstacruz/vim-closer'
-	use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
+	
+    use 'rstacruz/vim-closer'
+	
+    use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
 
 	use 'justinmk/vim-sneak'
 
 	-- rust
 	use 'nvim-lua/lsp_extensions.nvim'
-	-- Collection of common configurations for the Nvim LSP client
+    
+    -- Collection of common configurations for the Nvim LSP client
 	use 'neovim/nvim-lspconfig'
 
 	-- Completion framework
@@ -22,7 +27,7 @@ return require('packer').startup(function()
 	-- Snippet completion source for nvim-cmp
 	use 'hrsh7th/cmp-vsnip'
 
-	-- Other usefull completion sources
+	-- Other useful completion sources
 	use 'hrsh7th/cmp-path'
 	use 'hrsh7th/cmp-buffer'
 
@@ -40,8 +45,9 @@ return require('packer').startup(function()
 	use 'nvim-lua/plenary.nvim'
 	use 'nvim-telescope/telescope.nvim'
 
-	-- Color scheme used in the GIFs!
 	use 'arcticicestudio/nord-vim'
+
+    use 'lervag/vimtex'
 
 	use({
     		"iamcco/markdown-preview.nvim",
