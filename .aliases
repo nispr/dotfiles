@@ -5,11 +5,11 @@ vimf() {
 }
 
 vimff() {
-  FZF_DEFAULT_COMMAND='find . -type f -print'
+  # FZF_DEFAULT_COMMAND='find . -type f -print'
   timeout=$2
   [ ! -z "$timeout" ] || timeout=5
   echo "Will search for $timeout seconds"
-  result=$(timeout 5 fzf --filter "$1")
+  result=$(timeout $timeout fzf --filter "$1")
   if [ $? -eq 0 ] && [ ! -z "$result" ]; then
     firstMatch=$(echo $result | head -n1)
     vim "$firstMatch"
@@ -19,4 +19,6 @@ vimff() {
 }
 export -f vimf &>/dev/null
 export -f vimff &>/dev/null
+alias vimconfig='vim ~/.config/nvim/init.vim'
+alias vimplugs='vim ~/.config/nvim/lua/plugins.lua'
 alias zshconfig='vim ~/.zshrc'
