@@ -6,11 +6,15 @@ if [ ! $(command -v brew) ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-ios=""\
+brew tap homebrew/command-not-found
+
+ios=$(echo -e ""\
 	"carthage"\
   	"cocoapods"\
+)
 
-general="broot"\
+general=$(echo -e ""\
+    "broot"\
 	"coreutils"\
 	"ddate"\
 	"fzf"\
@@ -24,11 +28,20 @@ general="broot"\
 	"ruby"\
 	"tmux"\
 	"zsh-syntax-highlighting"\
+)
 
-networking="httpie"
+networking=$(echo -e ""\
+    "httpie"
+)
 
-creative="hugo"
+creative=$(echo -e ""\
+    "hugo"
+)
 
-utility="googler" "lastpass-cli" "thefuck"
+utility=$(echo -e ""\
+    "googler"\
+    "lastpass-cli"\
+    "thefuck"
+)
 
 brew install $ios $general $networking $creative $utility
