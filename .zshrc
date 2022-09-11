@@ -88,15 +88,18 @@ export LC_ALL=en_US.UTF-8
 export EDITOR='nvim'
 export VISUAL='nvim'
 export NVM_DIR="$HOME/.nvm"
-export ANDROID_HOME=/Users/$USER/Library/Android/sdk
-export ANDROID_SDK=/Users/$USER/Library/Android/sdk
-export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+export ANDROID_HOME="/Users/$USER/Library/Android/sdk"
+export ANDROID_SDK="$ANDROID_HOME"
 export JAVA_HOME="/opt/homebrew/opt/openjdk"
+export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
+export FZF_DEFAULT_COMMAND='find .'
+
+export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
 export PATH="$PATH:/opt/homebrew/opt/openjdk/bin"
 export PATH="$PATH:~/.cargo/bin"
 export PATH="$PATH:~/scripts"
-export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
-export FZF_DEFAULT_COMMAND='find .'
+export PATH="$PATH:$GEM_HOME/bin"
 
 # INITS #################################
 

@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
-# Brew installation
+DIR="${0%/*}"
 
 if [ ! $(command -v brew) ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -26,6 +25,7 @@ general=$(echo -e ""\
 	"node"\
 	"ripgrep"\
 	"ruby"\
+    "tig"\
 	"tmux"\
 	"zsh-syntax-highlighting"\
 )
@@ -41,6 +41,7 @@ creative=$(echo -e ""\
 utility=$(echo -e ""\
     "googler"\
     "lastpass-cli"\
+    "texlive"\
     "thefuck"
 )
 
