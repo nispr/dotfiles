@@ -18,3 +18,16 @@ echo "Installing brew packages..."
 
 echo "Installing npm packages..."
 ./install_scripts/install_npm_packages.sh
+
+
+
+instructions=$(cat <<EOF 
+Installations done. Things to do manually:
+    - Stop Spotlight from indexing external hard drives.
+    - Setup inverse search in Skim (PDF Viewer). From the vimtex
+      manual: Open the "Sync" tab in the settings panel in Skim 
+      and set it to "Custom". The command should be the like 
+      nvim --headless -c "VimtexInverseSearch %line '%file'"
+EOF)
+
+echo "${instructions}"
