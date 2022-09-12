@@ -127,12 +127,28 @@ getnews () {
         echo "News have been fetched $age minutes ago."
     fi
     if [ $age -ge $cacheMaxAge ]; then
-        echo "Fetching freshest news."
-        curl https://newsapi.org/v2/top-headlines -s -G \
+        set +m
+        { curl https://newsapi.org/v2/top-headlines -s -G \
             -d sources=$1 \
             -d apiKey="$3" \
             -d pageSize="$2" \
-            -o "$cacheFile"
+            -o "$cacheFile" 2>/dev/null & } 2>/dev/null
+
+        pid=$!
+
+        spin[1]="-"
+        spin[2]="\\"
+        spin[3]="|"
+        spin[4]="/"
+
+        while kill -0 $pid 2>/dev/null; do
+            for i in "${spin[@]}"
+            do
+                echo -ne "\r--$i Fetching latest news...\r"
+                sleep 0.1
+            done
+        done
+        set -m
     fi
 
     news=$(jq -rC '.articles[] | .title, "> "+.url, ""' "$cacheFile")
