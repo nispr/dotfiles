@@ -21,5 +21,21 @@ vimff() {
 export -f vimf &>/dev/null
 export -f vimff &>/dev/null
 alias vimconfig='vim ~/.config/nvim/init.vim'
+alias vimconf=vimconfig
 alias vimplugs='vim ~/.config/nvim/lua/plugins.lua'
 alias zshconfig='vim ~/.zshrc'
+alias zshconf=zshconfig
+
+gitg() {
+    msg=$1
+    if [ -z $1 ]; then msg="Update"; fi
+    git add -A
+    git commit -m "$1"
+}
+export -f gitg &>/dev/null
+
+gitgo() {
+    gitg "$1"
+    git push
+}
+export -f gitgo &>/dev/null 
