@@ -12,15 +12,18 @@ set softtabstop=4
 set expandtab
 
 set mouse=a
-
 set number
 
+" Vimtex
+let g:vimtex_view_method = 'skim'
+syntax enable
+
+" NerdTree
 nmap <F6> :NERDTreeToggle<CR>
 
 " Start NERDTree when Vim is started without file arguments.
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
-
 map <C-o> :NERDTreeToggle %<CR>
 
 if has('termguicolors')
@@ -28,9 +31,7 @@ if has('termguicolors')
 endif
 colorscheme gruvbox
 
-
 autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 200)
-
 
 " Rust
 " " Configure lsp

@@ -2,32 +2,33 @@
 DIR="${0%/*}"
 
 if [ ! $(command -v brew) ]; then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 brew tap homebrew/command-not-found
 
 ios=$(echo -e ""\
-	"carthage"\
-  	"cocoapods"\
+    "carthage"\
+    "cocoapods"\
 )
 
 general=$(echo -e ""\
     "broot"\
-	"coreutils"\
-	"ddate"\
-	"fzf"\
-	"gawk"\
-	"gh"\
-	"htop"\
-	"jenv"\
-	"neovim"\
-	"node"\
-	"ripgrep"\
-	"ruby"\
+    "coreutils"\
+    "dbus"\
+    "ddate"\
+    "fzf"\
+    "gawk"\
+    "gh"\
+    "htop"\
+    "jenv"\
+    "neovim"\
+    "node"\
+    "ripgrep"\
+    "ruby"\
     "tig"\
-	"tmux"\
-	"zsh-syntax-highlighting"\
+    "tmux"\
+    "zsh-syntax-highlighting"\
 )
 
 networking=$(echo -e ""\
@@ -45,4 +46,8 @@ utility=$(echo -e ""\
     "thefuck"
 )
 
+echo "Installing brew packages"
 brew install $ios $general $networking $creative $utility
+
+echo "Installing skim" # for vimtex
+brew install --cask skim
