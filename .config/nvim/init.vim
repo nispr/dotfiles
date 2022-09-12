@@ -14,6 +14,8 @@ set expandtab
 set mouse=a
 set number
 
+autocmd BufEnter * silent! lcd %:p:h
+
 nmap <F2> :cn<CR>
 
 " Vimtex
