@@ -7,53 +7,53 @@ if [ "$ZSH_PROFILE_STARTUP" = true ]; then zmodload zsh/zprof; fi
 WC_BIN=wc
 DATE_BIN=date
 if [ "$(uname -s)" = "Darwin" ]; then
-  WC_BIN=gwc
-  DATE_BIN=gdate
+    WC_BIN=gwc
+    DATE_BIN=gdate
 fi
 
 # PLUGINS ##############################
 
 # fzf: General purpose command line fuzzy finder
 if [ ! $(command -v fzf) ] && [ "$(uname -s)" = "Darwin" ]; then
-  brew install fzf
-  $(brew --prefix)/opt/fzf/install
+    brew install fzf
+    $(brew --prefix)/opt/fzf/install
 fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh # 
 
 ANTIGEN=$HOME/.antigen/
 [ ! -f "$ANTIGEN.lock" ] || rm "$ANTIGEN.lock"
 [ -f $ANTIGEN/antigen.zsh ] || git clone \
-  https://github.com/zsh-users/antigen.git $ANTIGEN
-if [[ -f $ANTIGEN/antigen.zsh ]]; then
-  source $ANTIGEN/antigen.zsh
-  antigen use oh-my-zsh
-  antigen bundle gitfast # git completions
-  antigen bundle zsh-users/zsh-autosuggestions # fish-like completions
-  antigen bundle web-search # 'google mything'
-  
-  antigen bundle thefuck # saying 'fuck' will fix your faulty input
-  eval $(thefuck --alias)
+    https://github.com/zsh-users/antigen.git $ANTIGEN
+    if [[ -f $ANTIGEN/antigen.zsh ]]; then
+        source $ANTIGEN/antigen.zsh
+        antigen use oh-my-zsh
+        antigen bundle gitfast # git completions
+        antigen bundle zsh-users/zsh-autosuggestions # fish-like completions
+        antigen bundle web-search # 'google mything'
 
-  if [ ! $(command -v autojump) ]; then
-    echo "Autojump needs to be installed before it can be used."
-  else 
-    antigen bundle autojump # 'j dir', a cd that learns. need to install via homebrew first
-    [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && \
-      . /opt/homebrew/etc/profile.d/autojump.sh
-  fi
-  
-  antigen bundle adb # adb completions
-  antigen bundle copydir # copy current directory to clipboard
-  antigen bundle copyfile # copy file contents to clipboard
-  antigen bundle gradle # gradle completions
-  
+        antigen bundle thefuck # saying 'fuck' will fix your faulty input
+        eval $(thefuck --alias)
+
+        if [ ! $(command -v autojump) ]; then
+            echo "Autojump needs to be installed before it can be used."
+        else 
+            antigen bundle autojump # 'j dir', a cd that learns. need to install via homebrew first
+            [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && \
+                . /opt/homebrew/etc/profile.d/autojump.sh
+        fi
+
+        antigen bundle adb # adb completions
+        antigen bundle copydir # copy current directory to clipboard
+        antigen bundle copyfile # copy file contents to clipboard
+        antigen bundle gradle # gradle completions
+
   # navigate directory history using ALT-LEFT/RIGHT, 
   # file hierarchy with ALT-UP/DOWN. 
   # "Use option as meta key" must be enabled for MacOS bundled Terminal. Or just use iTerm
   antigen bundle dirhistory 
- 
+
   antigen bundle Aloxaf/fzf-tab # fzf for tabs
-  
+
   # syntax-highlighting makes your input interesting
   antigen bundle zsh-users/zsh-syntax-highlighting
 
@@ -67,7 +67,7 @@ if [[ -f $ANTIGEN/antigen.zsh ]]; then
   antigen bundle common-aliases # Adds common aliases
 
   antigen apply
-fi
+    fi
 
 # OHMYZSH ###############################
 
@@ -105,7 +105,7 @@ export PATH="$PATH:$GEM_HOME/bin"
 
 # Setup for broot
 if [ $(command -v broot) ]; then
-  source /$HOME/.config/broot/launcher/bash/br
+    source /$HOME/.config/broot/launcher/bash/br
 fi
 
 # NVM setup: not using it right now, costs a lot of startup time
@@ -117,31 +117,31 @@ fi
 
 # Wrapper for NewsAPI - https://newsapi.org/ 
 getnews () {
-  cacheFile=/tmp/news_cache
-  now=$($DATE_BIN +%s)
-  cached=$($DATE_BIN +%s -r "$cacheFile" 2>/dev/null)
-  cacheMaxAge=15
-  age=$cacheMaxAge
-  if [ -f "$cacheFile" ]; then
-    age=$(expr $(expr $now - $cached) / 60)
-    echo "News have been fetched $age minutes ago."
-  fi
-  if [ $age -ge $cacheMaxAge ]; then
-    echo "Fetching freshest news."
-    curl https://newsapi.org/v2/top-headlines -s -G \
-      -d sources=$1 \
-      -d apiKey="$3" \
-      -d pageSize="$2" \
-      -o "$cacheFile"
-  fi
-  
-  news=$(jq -rC '.articles[] | .title, "> "+.url, ""' "$cacheFile")
-  longestLink=$(echo "$news" | grep http | $WC_BIN -L)
-  if [ $(command -v cowsay) ]; then 
-    echo "$news" | cowsay -pW$longestLink
-  else
-    echo "$news"
-  fi
+    cacheFile=/tmp/news_cache
+    now=$($DATE_BIN +%s)
+    cached=$($DATE_BIN +%s -r "$cacheFile" 2>/dev/null)
+    cacheMaxAge=15
+    age=$cacheMaxAge
+    if [ -f "$cacheFile" ]; then
+        age=$(expr $(expr $now - $cached) / 60)
+        echo "News have been fetched $age minutes ago."
+    fi
+    if [ $age -ge $cacheMaxAge ]; then
+        echo "Fetching freshest news."
+        curl https://newsapi.org/v2/top-headlines -s -G \
+            -d sources=$1 \
+            -d apiKey="$3" \
+            -d pageSize="$2" \
+            -o "$cacheFile"
+    fi
+
+    news=$(jq -rC '.articles[] | .title, "> "+.url, ""' "$cacheFile")
+    longestLink=$(echo "$news" | grep http | $WC_BIN -L)
+    if [ $(command -v cowsay) ]; then 
+        echo "$news" | cowsay -pW$longestLink
+    else
+        echo "$news"
+    fi
 }
 
 # STARTUP #################

@@ -14,6 +14,8 @@ set expandtab
 set mouse=a
 set number
 
+nmap <F2> :cn<CR>
+
 " Vimtex
 let g:vimtex_view_method = 'skim'
 syntax enable
