@@ -1,4 +1,4 @@
-#/!usr/bin/env bash
+#/!usr/bin/env zsh
 # 
 # Installs symbolic links to dotfiles and installs 
 # specified binaries.
@@ -13,13 +13,13 @@ ln -s "$HOME/.zshrc" "$DIR/.zshrc"
 ln -s "$HOME/.config/nvim" "$DIR/.config/nvim"
 
 xcode-select --install
+sudo xcodebuild -runFirstLaunch
+
 echo "Installing brew packages..."
 ./install_scripts/install_brew_packages.sh
 
 echo "Installing npm packages..."
 ./install_scripts/install_npm_packages.sh
-
-
 
 instructions=$(cat <<EOF 
 Installations done. Things to do manually:

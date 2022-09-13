@@ -1,0 +1,157 @@
+tap homebrew/commands-not-found
+
+# Rust package manager
+brew carthage
+
+# iOS package manager
+brew cocoapods
+
+# File explorer
+brew broot
+
+# Generic binaries
+brew coreutils
+
+# Date utility
+brew ddate
+
+# Fuzzy file finder
+brew fzf
+
+# GNU awk
+brew gawk
+
+# GitHub client
+brew gh
+
+# interactive process viewer
+brew htop
+
+# Vim but better
+brew neovim
+
+# Node.
+brew node
+
+# Grep recursively in files
+brew ripgrep
+
+# Ruby.
+brew ruby
+
+# Text-mode interface for git
+brew tig
+
+# Split your terminal and manage sessions
+brew tmux
+
+# Get color hints while typing in CLI
+brew zsh-syntax-highlighting
+
+# API client
+brew httpie
+
+# Static website building framework
+brew hugo
+
+# Google in terminal
+brew googler
+
+# Use LastPass
+brew lastpass-cli
+
+# LaTeX support
+brew texlive
+
+# Type 'fuck' to autocorrect
+brew thefuck
+
+# A must.
+cask alfred
+
+# Android IDE
+cask android-studio
+
+# Cleans your menu bar (freemium)
+cask bartender
+
+# Network debugging proxy
+cask charles
+
+# Stash & unstash files
+mas "Dropover", id: 1355679052
+
+# Easy drag&drop filesharing & more
+cask dropshare
+
+# Graphically shows disk usage within a file system
+cask grandperspective
+
+# Open-source video transcoder
+cask handbrake
+
+# File (un)archiver
+cask keka
+
+# Customizes mouse behavior
+cask linearmouse
+
+# Browser
+cask microsoft-edge
+
+# Native Instruments VST management
+cask native-access
+
+# RSS reader
+cask netnewswire
+
+# VPN client
+cask nordvpn
+
+# Windows VM
+cask parallels
+
+# Media converter
+cask permute
+
+# Read-later-list
+mas "Pocket", id: 568494494
+
+# Collaboration platform for API development
+cask postman
+
+# Python IDE
+cask pycharm
+
+# Move and resize windows with shortcuts
+cask rectangle
+
+# PDF viewer
+cask skim
+
+# Snippet management tool
+mas "SnippetsLab", id: 1006087419
+
+# Git GUI
+cask sourcetree
+
+# Music creation platform
+cask splice
+
+# Music player
+cask spotify
+
+# Video game distribution service
+cask steam
+
+# Text editor
+cask sublime-text
+
+# Todo list
+cask todoist
+
+# Game development IDE
+cask unity
+
+# Apple-OSes development IDE
+mask "Xcode", id: 497799835
