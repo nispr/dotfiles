@@ -164,7 +164,7 @@ getnews () {
 
 # Display top 3 news from TechCrunch
 newsapiKey=$(cat ~/.apikeys/newsapi)
-getnews "techcrunch" 3 "$newsapiKey"
+getnews "hacker-news" 4 "$newsapiKey"
 
 if [ "$ZSH_PROFILE_STARTUP" = true ]; then zprof; fi
 
