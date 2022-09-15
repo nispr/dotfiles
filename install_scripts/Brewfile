@@ -114,6 +114,8 @@ cask parallels
 # Media converter
 cask permute
 
+brew pngpaste
+
 # Read-later-list
 mas "Pocket", id: 568494494
 

@@ -35,12 +35,21 @@ if has('termguicolors')
 endif
 colorscheme gruvbox
 
+" MarkdownPreview
+" Start automatically when entering Markdown Buffer
+let g:mkdp_auto_start = 1 
+
+" Markdown: Insert image from clipboard
+command -nargs=1 MdPng :exe "normal i ![](" . <f-args> . ".png \"\")" | :!pngpaste <f-args>.png
+
+" Rust 
 autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 200)
 
 " Rust
 " " Configure lsp
 " https://github.com/neovim/nvim-lspconfig#rust_analyzer
 lua <<EOF
+
 
 -- nvim_lsp object
 local nvim_lsp = require'lspconfig'
