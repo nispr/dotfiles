@@ -21,6 +21,9 @@ echo "Installing brew packages..."
 echo "Installing npm packages..."
 ./install_scripts/install_npm_packages.sh
 
+echo "Setting up nvim..."
+./install_scripts/install_nvim_plugins.sh
+
 instructions=$(cat <<EOF 
 Installations done. Things to do manually:
     - Stop Spotlight from indexing external hard drives.

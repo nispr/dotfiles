@@ -1,56 +1,58 @@
 return require('packer').startup(function()
-	use 'wbthomason/packer.nvim'
-	use 'morhetz/gruvbox'
-	
+    use 'wbthomason/packer.nvim'
+    use 'morhetz/gruvbox'
+
     -- File explorer pane
     use 'preservim/nerdtree'
-	use 'Xuyuanp/nerdtree-git-plugin'
-	
+    use 'Xuyuanp/nerdtree-git-plugin'
+
+    -- autoclose brackets
     use 'rstacruz/vim-closer'
-	
+
     use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
 
-	use 'justinmk/vim-sneak'
+    use 'justinmk/vim-sneak'
 
-	-- rust
-	use 'nvim-lua/lsp_extensions.nvim'
-    
+    use 'nvim-lua/lsp_extensions.nvim'
+
     -- Collection of common configurations for the Nvim LSP client
-	use 'neovim/nvim-lspconfig'
+    use 'neovim/nvim-lspconfig'
 
-	-- Completion framework
-	use 'hrsh7th/nvim-cmp'
+    -- Completion framework
+    use 'hrsh7th/nvim-cmp'
 
-	-- LSP completion source for nvim-cmp
-	use 'hrsh7th/cmp-nvim-lsp'
+    -- LSP completion source for nvim-cmp
+    use 'hrsh7th/cmp-nvim-lsp'
 
-	-- Snippet completion source for nvim-cmp
-	use 'hrsh7th/cmp-vsnip'
+    -- Other useful completion sources
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-buffer'
+    use 'tamago324/cmp-zsh'
 
-	-- Other useful completion sources
-	use 'hrsh7th/cmp-path'
-	use 'hrsh7th/cmp-buffer'
+    -- Snippet engine
+    use 'SirVer/ultisnips'
+    use 'honza/vim-snippets'
 
-	-- See hrsh7th's other plugins for more completion sources!
+    -- To enable more of the features of rust-analyzer
+    use 'simrat39/rust-tools.nvim'
 
-	-- To enable more of the features of rust-analyzer, such as inlay hints and more!
-	use 'simrat39/rust-tools.nvim'
+    use 'octol/vim-cpp-enhanced-highlight'
 
-	-- Snippet engine
-	use 'hrsh7th/vim-vsnip'
+    -- Fuzzy finder
+    -- Optional
+    use 'nvim-lua/popup.nvim'
+    use 'nvim-lua/plenary.nvim'
+    use 'nvim-telescope/telescope.nvim'
 
-	-- Fuzzy finder
-	-- Optional
-	use 'nvim-lua/popup.nvim'
-	use 'nvim-lua/plenary.nvim'
-	use 'nvim-telescope/telescope.nvim'
+    -- Theme
+    use 'arcticicestudio/nord-vim'
 
-	use 'arcticicestudio/nord-vim'
-
+    -- LaTeX support
     use 'lervag/vimtex'
 
-	use({
-    		"iamcco/markdown-preview.nvim",
-    		run = function() vim.fn["mkdp#util#install"]() end,
-	})
+    -- Markdown Preview
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = function() vim.fn["mkdp#util#install"]() end,
+    })
 end)

@@ -107,7 +107,7 @@ local cmp = require'cmp'
 cmp.setup({
   snippet = {
     expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
+        vim.fn["UltiSnips#Anon"](args.body)
     end,
   },
   mapping = {
@@ -129,11 +129,20 @@ cmp.setup({
   -- Installed sources
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'vsnip' },
+    { name = 'ultisnips' },
     { name = 'path' },
     { name = 'buffer' },
+    { name = 'zsh' },
   },
 })
+
+cmp.setup.filetype('sh', {
+    sources = cmp.config.sources({
+      { name = 'zsh' },
+    }, {
+      { name = 'buffer' },
+    })
+  })
 EOF
 
 " have a fixed column for the diagnostics to appear in

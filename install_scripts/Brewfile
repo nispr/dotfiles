@@ -30,6 +30,9 @@ brew htop
 # Vim but better
 brew neovim
 
+# C++ LSP
+brew ccls
+
 # Node.
 brew node
 
@@ -38,6 +41,9 @@ brew ripgrep
 
 # Ruby.
 brew ruby
+
+# Bash linting
+brew shellcheck
 
 # Text-mode interface for git
 brew tig
@@ -59,9 +65,6 @@ brew googler
 
 # Use LastPass
 brew lastpass-cli
-
-# LaTeX support
-brew texlive
 
 # Type 'fuck' to autocorrect
 brew thefuck
