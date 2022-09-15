@@ -39,3 +39,5 @@ gitgo() {
     git push
 }
 export -f gitgo &>/dev/null 
+
+alias tigs="tig status"
