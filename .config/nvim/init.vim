@@ -16,7 +16,20 @@ set number
 
 autocmd BufEnter * silent! lcd %:p:h
 
-nmap <F2> :cn<CR>
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" diagnostic setup 
+autocmd BufWinEnter * :Trouble
+autocmd InsertCharPre,CursorMoved,CursorHold * silent! :TroubleRefresh
+nmap <silent> <F8> :exe "TroubleToggle quickfix"<CR>
+
+" jump to the next item, skipping the groups
+nmap <silent> <F2> lua require("trouble").next({skip_groups = true, jump = true});
+
+" jump to the previous item, skipping the groups
+nmap <silent> <F3> lua require("trouble").previous({skip_groups = true, jump = true});
 
 " Vimtex
 let g:vimtex_view_method = 'skim'
@@ -75,91 +88,88 @@ nvim_lsp.rust_analyzer.setup({
     }
 })
 
--- Enable diagnostics
+-- Setup diagnostics 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-    signs = true,
-    update_in_insert = true,
-  }
-)
+    vim.lsp.diagnostic.on_publish_diagnostics,
+    {
+      virtual_text = false,
+      signs = true,
+      update_in_insert = true,
+      underline = true,
+    }
+  )
 EOF
 
-" Code navigation shortcuts
-" as found in :help lsp
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
-
-" Quick-fix
-nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
-
-" Setup Completion
-" See https://github.com/hrsh7th/nvim-cmp#basic-configuration
-lua <<EOF
-local cmp = require'cmp'
-cmp.setup({
-  snippet = {
-    expand = function(args)
-        vim.fn["UltiSnips#Anon"](args.body)
-    end,
-  },
-  mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    -- Add tab support
-    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-    ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    })
-  },
-
-  -- Installed sources
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'ultisnips' },
-    { name = 'path' },
-    { name = 'buffer' },
-    { name = 'zsh' },
-  },
-})
-
-cmp.setup.filetype('sh', {
-    sources = cmp.config.sources({
-      { name = 'zsh' },
-    }, {
-      { name = 'buffer' },
-    })
-  })
-EOF
-
-" have a fixed column for the diagnostics to appear in
-" this removes the jitter when warnings/errors flow in
-set signcolumn=yes
-
-" Set updatetime for CursorHold
-" 300ms of no cursor movement to trigger CursorHold
-set updatetime=300
-" Show diagnostic popup on cursor hover
-autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+" COC setup
 
 
-" Goto previous/next diagnostic warning/error
-nnoremap <silent> g[ <cmd>lua vim.diagnostic.goto_prev()<CR>
-nnoremap <silent> g] <cmd>lua vim.diagnostic.goto_next()<CR>
+" https://github.com/folke/trouble.nvim/issues/12#issuecomment-882470958
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
 
 " Enable type inlay hints
 autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs
 \ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
+
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+let g:UltiSnipsExpandTrigger = "<nop>"
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+"nmap <silent> <F8> :CocDiagnostics<CR>
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+

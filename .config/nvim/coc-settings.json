@@ -1,4 +1,8 @@
-{
+{ 
+    "coc.preferences.useQuickfixForLocations": true,
+    "coc.preferences.snippets.enable": true,
+    "diagnostic.displayByAle": true,
+    "diagnostic.refreshOnInsertMode": true,
     "languageserver": {
         "bash": {
             "command": "bash-language-server",

@@ -18,17 +18,6 @@ return require('packer').startup(function()
     -- Collection of common configurations for the Nvim LSP client
     use 'neovim/nvim-lspconfig'
 
-    -- Completion framework
-    use 'hrsh7th/nvim-cmp'
-
-    -- LSP completion source for nvim-cmp
-    use 'hrsh7th/cmp-nvim-lsp'
-
-    -- Other useful completion sources
-    use 'hrsh7th/cmp-path'
-    use 'hrsh7th/cmp-buffer'
-    use 'tamago324/cmp-zsh'
-
     -- Snippet engine
     use 'SirVer/ultisnips'
     use 'honza/vim-snippets'
@@ -37,6 +26,8 @@ return require('packer').startup(function()
     use 'simrat39/rust-tools.nvim'
 
     use 'octol/vim-cpp-enhanced-highlight'
+
+    use 'dense-analysis/ale'
 
     -- Fuzzy finder
     -- Optional
@@ -55,4 +46,18 @@ return require('packer').startup(function()
         "iamcco/markdown-preview.nvim",
         run = function() vim.fn["mkdp#util#install"]() end,
     })
+
+    -- diagnostics
+    use {
+        "folke/trouble.nvim",
+        requires = "kyazdani42/nvim-web-devicons",
+        config = function()
+            require("trouble").setup {
+                mode = "quickfix",
+                auto_open = true, -- automatically open the list when you have diagnostics
+                auto_close = true, -- automatically close the list when you have no diagnostics
+
+            }
+        end
+    }
 end)
