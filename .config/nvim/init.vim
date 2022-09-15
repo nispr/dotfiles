@@ -1,9 +1,20 @@
 lua require('plugins')
 lua require('lspconfig')
 
+
+let configs = [
+            \  "ui",
+            \]
+for file in configs
+    let x = file.".vim"
+    if filereadable(x)
+        execute 'source' x
+    endif
+endfor
+
 augroup packer_user_config
-  autocmd!
-  autocmd BufWritePost plugins.lua source <afile> | PackerCompile
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
 augroup end
 
 set tabstop=4
@@ -14,6 +25,17 @@ set expandtab
 set mouse=a
 set number
 
+" Open file finder
+nmap <Tab> :Buffers<CR>
+nmap <S-Tab> :Files<CR>
+nmap <c-g> :GFiles?<CR>
+nmap ° :Rg<CR> 
+
+" Buffer control
+set hidden
+nnoremap <C-N> :bnext<CR>
+nnoremap <C-P> :bprev<CR>
+
 autocmd BufEnter * silent! lcd %:p:h
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
@@ -21,7 +43,7 @@ autocmd BufEnter * silent! lcd %:p:h
 set updatetime=300
 
 " diagnostic setup 
-autocmd BufWinEnter * :Trouble
+" autocmd BufWinEnter * silent! :Trouble
 autocmd InsertCharPre,CursorMoved,CursorHold * silent! :TroubleRefresh
 nmap <silent> <F8> :exe "TroubleToggle quickfix"<CR>
 
@@ -35,8 +57,29 @@ nmap <silent> <F3> lua require("trouble").previous({skip_groups = true, jump = t
 let g:vimtex_view_method = 'skim'
 syntax enable
 
+
 " NerdTree
+autocmd VimEnter * :NERDTree
 nmap <F6> :NERDTreeToggle<CR>
+autocmd VimEnter * wincmd p " move to main window
+
+" Highlight current file in NerTree
+" Check if NERDTree is open or active
+function! IsNERDTreeOpen()        
+    return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+endfunction
+
+" Call NERDTreeFind if NERDTree is active, current window contains a modifiable
+" file, and we're not in vimdiff
+function! SyncTree()
+    if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+        NERDTreeFind
+        wincmd p
+    endif
+endfunction
+
+" Highlight currently open buffer in NERDTree
+autocmd BufEnter * call SyncTree()
 
 " Start NERDTree when Vim is started without file arguments.
 autocmd StdinReadPre * let s:std_in=1
@@ -44,7 +87,7 @@ autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 map <C-o> :NERDTreeToggle %<CR>
 
 if has('termguicolors')
-	" set termguicolors 
+    " set termguicolors 
 endif
 colorscheme gruvbox
 
@@ -73,31 +116,31 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- Enable rust_analyzer
 nvim_lsp.rust_analyzer.setup({
-    capabilities=capabilities,
-    -- on_attach is a callback called when the language server attachs to the buffer
-    -- on_attach = on_attach,
-    settings = {
-      -- to enable rust-analyzer settings visit:
-      -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-      ["rust-analyzer"] = {
+capabilities=capabilities,
+-- on_attach is a callback called when the language server attachs to the buffer
+-- on_attach = on_attach,
+settings = {
+    -- to enable rust-analyzer settings visit:
+    -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+    ["rust-analyzer"] = {
         -- enable clippy diagnostics on save
         checkOnSave = {
-          command = "clippy"
-        },
-      }
+            command = "clippy"
+            },
+        }
     }
 })
 
 -- Setup diagnostics 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
-    {
-      virtual_text = false,
-      signs = true,
-      update_in_insert = true,
-      underline = true,
-    }
-  )
+vim.lsp.diagnostic.on_publish_diagnostics,
+{
+    virtual_text = false,
+    signs = true,
+    update_in_insert = true,
+    underline = true,
+}
+)
 EOF
 
 " COC setup
@@ -109,7 +152,7 @@ let g:ale_set_quickfix = 1
 
 " Enable type inlay hints
 autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs
-\ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
+            \ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment", enabled = {"TypeHint", "ChainingHint", "ParameterHint"} }
 
 
 " Always show the signcolumn, otherwise it would shift the text each time
@@ -119,25 +162,25 @@ set signcolumn=yes
 " Use tab for trigger completion with characters ahead and navigate.
 let g:UltiSnipsExpandTrigger = "<nop>"
 inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
+            \ coc#pum#visible() ? coc#pum#next(1) :
+            \ CheckBackspace() ? "\<Tab>" :
+            \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
 if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
+    inoremap <silent><expr> <c-space> coc#refresh()
 else
-  inoremap <silent><expr> <c-@> coc#refresh()
+    inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
 " Use `[g` and `]g` to navigate diagnostics
@@ -156,11 +199,11 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
 function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
+    if CocAction('hasProvider', 'hover')
+        call CocActionAsync('doHover')
+    else
+        call feedkeys('K', 'in')
+    endif
 endfunction
 
 " Highlight the symbol and its references when holding the cursor.

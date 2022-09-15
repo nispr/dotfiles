@@ -1,6 +1,12 @@
 return require('packer').startup(function()
     use 'wbthomason/packer.nvim'
+    
+    -- Theme
     use 'morhetz/gruvbox'
+    
+    -- fzf!
+    use { 'junegunn/fzf.vim' }
+    use 'junegunn/fzf'
 
     -- File explorer pane
     use 'preservim/nerdtree'
