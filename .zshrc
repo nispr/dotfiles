@@ -1,15 +1,21 @@
+#      )  (        )  (           
+#   ( /(  )\ )  ( /(  )\ )   (    
+#   )\())(()/(  )\())(()/(   )\   
+#  ((_)\  /(_))((_)\  /(_))(((_)  
+#   _((_)(_))   _((_)(_))  )\___  
+#  |_  / / __| | || || _ \((/ __| 
+#   / /  \__ \ | __ ||   / | (__  
+#  /___| |___/ |_||_||_|_\  \___| 
+#                             
+# #################################################
+#
 # Basic .zshrc that shows top3 news from techcrunch 
 # and adds some essential plugins
+#
+# #################################################
 
 ZSH_PROFILE_STARTUP=false # set to true to analyze startup time
 if [ "$ZSH_PROFILE_STARTUP" = true ]; then zmodload zsh/zprof; fi
-
-WC_BIN=wc
-DATE_BIN=date
-if [ "$(uname -s)" = "Darwin" ]; then
-    WC_BIN=gwc
-    DATE_BIN=gdate
-fi
 
 # PLUGINS ##############################
 
@@ -76,31 +82,6 @@ ZSH_THEME="crunch-custom" # I feel like antigen setup for custom themes is slowe
 zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 source $ZSH/oh-my-zsh.sh
 
-# ALIASES ###############################
-
-source ~/.aliases
-
-# EXPORTS ###############################
-
-export LANG=en_US.UTF-8
-export LC_CTYPE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-export EDITOR='nvim'
-export VISUAL='nvim'
-export NVM_DIR="$HOME/.nvm"
-export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
-export ANDROID_HOME="/Users/$USER/Library/Android/sdk"
-export ANDROID_SDK="$ANDROID_HOME"
-export JAVA_HOME="/opt/homebrew/opt/openjdk"
-export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
-export FZF_DEFAULT_COMMAND='find .'
-
-export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
-export PATH="$PATH:/opt/homebrew/opt/openjdk/bin"
-export PATH="$PATH:~/.cargo/bin"
-export PATH="$PATH:~/scripts"
-export PATH="$PATH:$GEM_HOME/bin"
-
 # INITS #################################
 
 # Setup for broot
@@ -117,46 +98,13 @@ fi
 
 # Wrapper for NewsAPI - https://newsapi.org/ 
 getnews () {
-    cacheFile=/tmp/news_cache
-    now=$($DATE_BIN +%s)
-    cached=$($DATE_BIN +%s -r "$cacheFile" 2>/dev/null)
-    cacheMaxAge=15
-    age=$cacheMaxAge
-    if [ -f "$cacheFile" ]; then
-        age=$(expr $(expr $now - $cached) / 60)
-        echo "News have been fetched $age minutes ago."
-    fi
-    if [ $age -ge $cacheMaxAge ]; then
-        set +m
-        { curl https://newsapi.org/v2/top-headlines -s -G \
-            -d sources=$1 \
-            -d apiKey="$3" \
-            -d pageSize="$2" \
-            -o "$cacheFile" 2>/dev/null & } 2>/dev/null
-
-        pid=$!
-
-        spin[1]="-"
-        spin[2]="\\"
-        spin[3]="|"
-        spin[4]="/"
-
-        while kill -0 $pid 2>/dev/null; do
-            for i in "${spin[@]}"
-            do
-                echo -ne "\r--$i Fetching latest news...\r"
-                sleep 0.1
-            done
-        done
-        set -m
-    fi
-
-    news=$(jq -rC '.articles[] | .title, "> "+.url, ""' "$cacheFile")
-    longestLink=$(echo "$news" | grep http | $WC_BIN -L)
+    file="/tmp/hacker-news-cached"
+    do_async "Fetching latest hacker-news..." fetch_or_cached "$file" 10 fetch_hacker_news
+    longestLink=$(cat "$file" | grep http | $WC_BIN -L)
     if [ $(command -v cowsay) ]; then 
-        echo "$news" | cowsay -pW$longestLink
+        cat "$file" | cowsay -pW$longestLink
     else
-        echo "$news"
+        cat "$file"
     fi
 }
 
@@ -165,7 +113,6 @@ getnews () {
 # Display top 3 news from TechCrunch
 newsapiKey=$(cat ~/.apikeys/newsapi)
 getnews "hacker-news" 4 "$newsapiKey"
-
 if [ "$ZSH_PROFILE_STARTUP" = true ]; then zprof; fi
 
 ###############################################################################
