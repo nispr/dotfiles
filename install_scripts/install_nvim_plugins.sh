@@ -13,3 +13,6 @@ nvim --headless -c "CocInstall coc-diagnostic" -c "qa"
 
 # VimScript LSP 
 nvim --headless -c "CocInstall vim-language-server" -c "qa"
+
+# Typescript LSP
+nvim --headless -c "CocInstall coc-tsserver" -c "qa"

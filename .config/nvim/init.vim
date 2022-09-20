@@ -1,7 +1,6 @@
 lua require('plugins')
 lua require('lspconfig')
 
-
 let configs = [
             \  "ui",
             \]
@@ -87,7 +86,7 @@ autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
 map <C-o> :NERDTreeToggle %<CR>
 
 if has('termguicolors')
-    " set termguicolors 
+    "    set termguicolors 
 endif
 colorscheme gruvbox
 
@@ -98,38 +97,7 @@ autocmd BufWinEnter *.md MarkdownPreview
 " Markdown: Insert image from clipboard
 command -nargs=1 MdPng :exe "normal i ![](" . <f-args> . ".png \"\")" | :!pngpaste <f-args>.png
 
-" Rust 
-autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 200)
-
-" Rust
-" " Configure lsp
-" https://github.com/neovim/nvim-lspconfig#rust_analyzer
 lua <<EOF
-
-
--- nvim_lsp object
-local nvim_lsp = require'lspconfig'
-
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
--- Enable rust_analyzer
-nvim_lsp.rust_analyzer.setup({
-capabilities=capabilities,
--- on_attach is a callback called when the language server attachs to the buffer
--- on_attach = on_attach,
-settings = {
-    -- to enable rust-analyzer settings visit:
-    -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-    ["rust-analyzer"] = {
-        -- enable clippy diagnostics on save
-        checkOnSave = {
-            command = "clippy"
-            },
-        }
-    }
-})
 
 -- Setup diagnostics 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -196,16 +164,17 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
-nnoremap <silent> K :call ShowDocIfNoDiagnostic()<CR>
+nnoremap <silent> K :call CocAction('doHover')<CR>
 
 function! ShowDocIfNoDiagnostic(timer_id)
-  if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
-    silent call CocActionAsync('doHover')
-  endif
+    let hasHover = CocHasProvider('hover')
+    if (coc#float#has_float() == 0 && hasHover == 1)
+        :silent! call CocActionAsync('doHover')
+    endif
 endfunction
 
 function! s:show_hover_doc()
-  call timer_start(500, 'ShowDocIfNoDiagnostic')
+    call timer_start(500, 'ShowDocIfNoDiagnostic')
 endfunction
 
 autocmd CursorHoldI * :call <SID>show_hover_doc()
@@ -221,3 +190,13 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
+let g:autoformat_verbosemode=1
+let g:formatterpath = ['/opt/homebrew/bin']
+let g:formatters_typescriptreact = ['prettier']
+let g:formatters_typescriptreact = ['prettier']
+let g:formatters_javascript = ['prettier']
+autocmd FileType javascript setlocal ts=2 sts=2 sw=2
+autocmd FileType javascriptreact setlocal ts=2 sts=2 sw=2
+autocmd FileType typescript setlocal ts=2 sts=2 sw=2
+autocmd FileType typescriptreact setlocal ts=2 sts=2 sw=2
+nmap ff :Autoformat<CR>

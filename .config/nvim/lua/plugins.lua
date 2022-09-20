@@ -3,20 +3,29 @@ return require('packer').startup(function()
     
     -- Theme
     use 'morhetz/gruvbox'
-    
+
+    -- Autoformat
+    use 'vim-autoformat/vim-autoformat'
+
     -- fzf!
-    use { 'junegunn/fzf.vim' }
+    use 'junegunn/fzf.vim'
     use 'junegunn/fzf'
+
+    -- Git integration
+    use 'tpope/vim-fugitive'
 
     -- File explorer pane
     use 'preservim/nerdtree'
     use 'Xuyuanp/nerdtree-git-plugin'
 
-    -- autoclose brackets
-    use 'rstacruz/vim-closer'
-
     use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
 
+    -- typescript support
+    use 'leafgarland/typescript-vim'
+    use 'peitalin/vim-jsx-typescript'
+    use 'neoclide/coc-prettier'
+
+    -- jump to pattern (press s{ab} to jump to ab)
     use 'justinmk/vim-sneak'
 
     use 'nvim-lua/lsp_extensions.nvim'
@@ -31,6 +40,7 @@ return require('packer').startup(function()
     -- To enable more of the features of rust-analyzer
     use 'simrat39/rust-tools.nvim'
 
+    -- C++ support
     use 'octol/vim-cpp-enhanced-highlight'
 
     use 'dense-analysis/ale'
