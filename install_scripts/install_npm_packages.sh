@@ -6,3 +6,6 @@ npm install -g tldr
 
 # bash language server
 npm install -g bash-language-server
+
+# typescript language server
+npm install -g typescript-language-server typescript

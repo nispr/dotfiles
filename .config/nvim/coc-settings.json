@@ -4,6 +4,11 @@
     "diagnostic.displayByAle": true,
     "diagnostic.refreshOnInsertMode": true,
     "languageserver": {
+        "typescript": {
+            "command": "typescript-language-server",
+            "args": ["--stdio"],
+            "filetypes": ["ts", "typescript"]
+        },
         "bash": {
             "command": "bash-language-server",
             "args": ["start"],

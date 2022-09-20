@@ -93,7 +93,7 @@ colorscheme gruvbox
 
 " MarkdownPreview
 " Start automatically when entering Markdown Buffer
-let g:mkdp_auto_start = 1 
+autocmd BufWinEnter *.md MarkdownPreview
 
 " Markdown: Insert image from clipboard
 command -nargs=1 MdPng :exe "normal i ![](" . <f-args> . ".png \"\")" | :!pngpaste <f-args>.png

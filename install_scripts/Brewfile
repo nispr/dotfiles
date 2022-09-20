@@ -6,6 +6,9 @@ brew carthage
 # iOS package manager
 brew cocoapods
 
+# Environment manager
+brew install conda
+
 # File explorer
 brew broot
 
@@ -47,6 +50,7 @@ brew shellcheck
 
 # Text-mode interface for git
 brew tig
+brew gitui
 
 # Split your terminal and manage sessions
 brew tmux
@@ -92,6 +96,9 @@ cask grandperspective
 
 # Open-source video transcoder
 cask handbrake
+
+# Interactive code running environments
+brew jupyter
 
 # File (un)archiver
 cask keka
@@ -160,3 +167,6 @@ cask unity
 
 # Apple-OSes development IDE
 mask "Xcode", id: 497799835
+
+# Zettelkasten note management
+brew zk

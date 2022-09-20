@@ -25,6 +25,8 @@ alias vimconf=vimconfig
 alias vimplugs='vim ~/.config/nvim/lua/plugins.lua'
 alias zshconfig='vim ~/.zshrc'
 alias zshconf=zshconfig
+alias envconfig='vim ~/.zshenv'
+alias envconf=envconfig
 
 gitg() {
     msg=$1
@@ -41,3 +43,5 @@ gitgo() {
 export -f gitgo &>/dev/null 
 
 alias tigs="tig status"
+alias g=gitui
+alias conda-env='source ~/miniforge3/bin/activate'

@@ -100,9 +100,9 @@ fi
 getnews () {
     file="/tmp/hacker-news-cached"
     do_async "Fetching latest hacker-news..." fetch_or_cached "$file" 10 fetch_hacker_news
-    longestLink=$(cat "$file" | grep http | $WC_BIN -L)
+    longestLine=$(cat "$file" | $WC_BIN -L)
     if [ $(command -v cowsay) ]; then 
-        cat "$file" | cowsay -pW$longestLink
+        cat "$file" | cowsay -W$longestLine
     else
         cat "$file"
     fi
@@ -116,3 +116,4 @@ getnews "hacker-news" 4 "$newsapiKey"
 if [ "$ZSH_PROFILE_STARTUP" = true ]; then zprof; fi
 
 ###############################################################################
+
