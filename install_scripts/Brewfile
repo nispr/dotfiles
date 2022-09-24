@@ -27,6 +27,9 @@ brew gawk
 # GitHub client
 brew gh
 
+# PlantUML visualization
+brew graphviz
+
 # interactive process viewer
 brew htop
 

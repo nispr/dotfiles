@@ -1,6 +1,6 @@
 return require('packer').startup(function()
     use 'wbthomason/packer.nvim'
-    
+
     -- Theme
     use 'morhetz/gruvbox'
 
@@ -43,7 +43,13 @@ return require('packer').startup(function()
     -- C++ support
     use 'octol/vim-cpp-enhanced-highlight'
 
+    -- Diagnostics
     use 'dense-analysis/ale'
+
+    -- PlantUML preview
+    use 'weirongxu/plantuml-previewer.vim'
+    use 'tyru/open-browser.vim'
+    use 'aklt/plantuml-syntax'
 
     -- Fuzzy finder
     -- Optional
