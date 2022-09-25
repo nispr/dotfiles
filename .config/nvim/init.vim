@@ -20,6 +20,8 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab
+set ignorecase " use \C to override in searches
+set smartcase
 
 set mouse=a
 set number

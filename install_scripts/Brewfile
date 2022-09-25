@@ -110,7 +110,7 @@ cask keka
 cask linearmouse
 
 # Browser
-cask microsoft-edge
+cask firefox
 
 # Native Instruments VST management
 cask native-access
