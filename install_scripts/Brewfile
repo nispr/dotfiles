@@ -1,4 +1,5 @@
 tap homebrew/commands-not-found
+tap mongodb/brew
 
 # Rust package manager
 brew carthage
@@ -32,6 +33,9 @@ brew graphviz
 
 # interactive process viewer
 brew htop
+
+# mongodb
+brew mongodb-community@6.0
 
 # Vim but better
 brew neovim
@@ -164,6 +168,9 @@ cask sublime-text
 
 # Todo list
 cask todoist
+
+# Lookup of common usecases via tldr {tool}
+brew tldr
 
 # Game development IDE
 cask unity

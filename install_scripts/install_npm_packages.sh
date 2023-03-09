@@ -9,3 +9,6 @@ npm install -g bash-language-server
 
 # autoformat
 npm install -g prettier
+
+# typescript+node
+npm install -g ts-node

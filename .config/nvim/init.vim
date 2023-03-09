@@ -26,6 +26,9 @@ set smartcase
 set mouse=a
 set number
 
+nmap <A-BS> diw
+nmap <A-Del> diw
+
 " Open file finder
 nmap <Tab> :Buffers<CR>
 nmap <S-Tab> :Files<CR>

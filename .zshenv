@@ -33,7 +33,9 @@ export NVM_DIR="$HOME/.nvm"
 export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
 export ANDROID_HOME="/Users/$USER/Library/Android/sdk"
 export ANDROID_SDK="$ANDROID_HOME"
-export JAVA_HOME="/opt/homebrew/opt/openjdk"
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_351.jdk/Contents/Home"
+# export JAVA_HOME="/opt/homebrew/opt/openjdk"
+# export JAVA_HOME="/Library/Java/JavaVirtualMachines/zulu-8.jdk/Contents/Home"
 export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 export FZF_DEFAULT_COMMAND='find .'
 
@@ -43,6 +45,9 @@ export PATH="$PATH:~/.cargo/bin"
 export PATH="$PATH:~/scripts"
 export PATH="$PATH:$GEM_HOME/bin"
 
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 ######### functionality 
 
 source ~/.aliases
