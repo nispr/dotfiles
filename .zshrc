@@ -94,7 +94,7 @@ ssh-add --apple-use-keychain ~/.ssh/id_ecdsa &>/dev/null
 # NVM setup: not using it right now, costs a lot of startup time
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# if which jenv > /dev/null; then eval "$(jenv init -)"; fi
+if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 
 # FUNCTIONALITY #################
 

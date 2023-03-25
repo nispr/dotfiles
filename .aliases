@@ -18,6 +18,10 @@ vimff() {
   fi
 }
 
+mongodb() {
+    /opt/homebrew/opt/mongodb-community/bin/mongod --config /opt/homebrew/etc/mongod.conf
+}
+
 export -f vimf &>/dev/null
 export -f vimff &>/dev/null
 alias vimconfig='vim ~/.config/nvim/init.vim'
@@ -44,4 +48,5 @@ export -f gitgo &>/dev/null
 
 alias tigs="tig status"
 alias g=gitui
+alias gu=gitui
 alias conda-env='source ~/miniforge3/bin/activate'
