@@ -44,6 +44,8 @@ export PATH="$PATH:/opt/homebrew/opt/openjdk/bin"
 export PATH="$PATH:~/.cargo/bin"
 export PATH="$PATH:~/scripts"
 export PATH="$PATH:$GEM_HOME/bin"
+export PATH="$PATH:$HOME/.flutter/flutter"
+export PATH="$PATH:$HOME/.flutter/flutter/bin"
 
 export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm

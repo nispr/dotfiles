@@ -14,8 +14,8 @@
 #
 # #################################################
 
-ZSH_PROFILE_STARTUP=false # set to true to analyze startup time
-if [ "$ZSH_PROFILE_STARTUP" = true ]; then zmodload zsh/zprof; fi
+# Use time ZSH_PROFILE_STARTUP=true zsh -i -c exit for profiling
+if [ "$ZSH_PROFILE_STARTUP" = true ]; then zmodload zsh/zprof && echo "profiling"; fi
 
 # PLUGINS ##############################
 
@@ -119,3 +119,8 @@ if [ "$ZSH_PROFILE_STARTUP" = true ]; then zprof; fi
 
 ###############################################################################
 
+if [ "$(arch)" = "arm64" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
