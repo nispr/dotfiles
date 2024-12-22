@@ -63,32 +63,32 @@ syntax enable
 
 
 " NerdTree
-autocmd VimEnter * :NERDTree
-nmap <F6> :NERDTreeToggle<CR>
-autocmd VimEnter * wincmd p " move to main window
+" autocmd VimEnter * :NERDTree
+" nmap <F6> :NERDTreeToggle<CR>
+" autocmd VimEnter * wincmd p " move to main window
 
 " Highlight current file in NerTree
 " Check if NERDTree is open or active
-function! IsNERDTreeOpen()        
-    return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-endfunction
+"function! IsNERDTreeOpen()        
+"    return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+"endfunction
 
 " Call NERDTreeFind if NERDTree is active, current window contains a modifiable
 " file, and we're not in vimdiff
-function! SyncTree()
-    if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
-        NERDTreeFind
-        wincmd p
-    endif
-endfunction
+"function! SyncTree()
+"    if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+"        NERDTreeFind
+"        wincmd p
+"    endif
+"endfunction
 
 " Highlight currently open buffer in NERDTree
-autocmd BufEnter * call SyncTree()
+"autocmd BufEnter * call SyncTree()
 
 " Start NERDTree when Vim is started without file arguments.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
-map <C-o> :NERDTreeToggle %<CR>
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists('s:std_in') | NERDTree | endif
+"map <C-o> :NERDTreeToggle %<CR>
 
 if has('termguicolors')
     "    set termguicolors 

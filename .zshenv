@@ -61,14 +61,19 @@ do_async () {
     msg=$1
     if [ -z $msg ]; then msg="Fetching..."; fi
     set +m
-    { zsh -c "$(printf ' %q' "${@:2}")" & } &>/dev/null
+    { zsh -c "$(printf ' %q' "${@:2}")" &>/dev/null } &>/dev/null
 
+    # This takes like 420ms. 
+    # That's bad.
+    
     pid=$!
 
     spin[1]="-"
     spin[2]="\\"
     spin[3]="|"
     spin[4]="/"
+    spin[5]="/"
+    spin[6]="/"
 
     while kill -0 $pid 2>/dev/null; do
         for i in "${spin[@]}"

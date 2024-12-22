@@ -15,8 +15,8 @@ return require('packer').startup(function()
     use 'tpope/vim-fugitive'
 
     -- File explorer pane
-    use 'preservim/nerdtree'
-    use 'Xuyuanp/nerdtree-git-plugin'
+    -- use 'preservim/nerdtree'
+    -- use 'Xuyuanp/nerdtree-git-plugin'
 
     use {'neoclide/coc.nvim', branch = 'master', run = 'yarn install --frozen-lockfile'}
 

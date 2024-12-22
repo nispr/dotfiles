@@ -17,6 +17,8 @@
 # Use time ZSH_PROFILE_STARTUP=true zsh -i -c exit for profiling
 if [ "$ZSH_PROFILE_STARTUP" = true ]; then zmodload zsh/zprof && echo "profiling"; fi
 
+plugins=(git)
+
 # PLUGINS ##############################
 
 # fzf: General purpose command line fuzzy finder
@@ -71,6 +73,8 @@ ANTIGEN=$HOME/.antigen/
   # Add common aliases (needs Pygments)
   [ $(command -v pygmentize) ] || pip3 install Pygments # used by common-aliases
   antigen bundle common-aliases # Adds common aliases
+  # but override them with ours
+  source ~/.aliases
 
   antigen apply
     fi
@@ -124,3 +128,6 @@ if [ "$(arch)" = "arm64" ]; then
 else
     eval "$(/usr/local/bin/brew shellenv)"
 fi
+
+# but override them with ours
+source ~/.aliases

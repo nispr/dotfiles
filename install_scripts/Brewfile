@@ -1,6 +1,21 @@
 tap homebrew/commands-not-found
 tap mongodb/brew
 
+# cat with git + syntax highlighting
+brew bat
+
+# disk management
+brew install dua-cli
+
+# better disk usage / df
+brew duf
+
+# better ls (exa unmaintained) 
+brew eza
+
+# Cheatsheets
+brew navi
+
 # Rust package manager
 brew carthage
 
