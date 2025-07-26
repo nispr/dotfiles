@@ -1,6 +1,8 @@
 tap homebrew/commands-not-found
 tap mongodb/brew
 
+brew antidote
+
 # cat with git + syntax highlighting
 brew bat
 
@@ -60,6 +62,9 @@ brew ccls
 
 # Node.
 brew node
+
+# Powerlevel10k, instant prompt for zsh
+brew powerlevel10k
 
 # Grep recursively in files
 brew ripgrep

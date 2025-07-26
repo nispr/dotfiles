@@ -24,6 +24,8 @@ if [ "$(uname -s)" = "Darwin" ]; then
     DATE_BIN=gdate
 fi
 
+export OPENROUTESERVICE_API_KEY="$(cat ~/.apikeys/openrouteservice)"
+
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8

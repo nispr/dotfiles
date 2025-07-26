@@ -54,6 +54,7 @@ alias conda-env='source ~/miniforge3/bin/activate'
 # EXA (https://github.com/DarrinTisdale/zsh-aliases-exa)
 # general use
 alias ls='eza'                                                          # ls
+alias lsa='ls -la'                                                      # ls
 alias l='eza -lbF --git'                                                # list, size, type, git
 alias ll='eza -lbGF --git'                                              # long list
 alias llm='eza -lbGd --git --sort=modified'                             # long list, modified date sort

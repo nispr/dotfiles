@@ -13,10 +13,11 @@ fetch_hacker_news() {
     for id in $rawIds; do
         baseUrl="https://news.ycombinator.com/item?id="
         itemApi="https://hacker-news.firebaseio.com/v0/item/$id.json?print=pretty"
-        news=$(curl "$itemApi" -s -G | jq -rc ".title, \"> $baseUrl\(.id)\"")
+        news=$(curl "$itemApi" -G -s | jq -rc ".title, \"> $baseUrl\(.id)\"")
         details=$(echo -e $news)
         string+="$details\n\n"
     done
 
     echo "$string"
 }
+
